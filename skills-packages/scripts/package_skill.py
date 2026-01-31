@@ -115,7 +115,7 @@ def main():
     else:
         print("  ✓ Validation passed")
 
-    print(f"\nPackaging skill...")
+    print("\nPackaging skill...")
     output_file = package_skill(skill_path, output_dir)
     print(f"  ✓ Created: {output_file}")
 
