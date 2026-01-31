@@ -48,6 +48,10 @@ def validate_skill(skill_path: Path) -> tuple[bool, list[str]]:
         errors.append(f"Invalid YAML in frontmatter: {e}")
         return False, errors
 
+    if not isinstance(frontmatter, dict):
+        errors.append("Frontmatter must be a mapping")
+        return False, errors
+
     # Check required fields
     if "name" not in frontmatter:
         errors.append("Frontmatter missing required field: name")
@@ -57,10 +61,13 @@ def validate_skill(skill_path: Path) -> tuple[bool, list[str]]:
     # Check description quality
     if "description" in frontmatter:
         desc = frontmatter["description"]
-        if len(desc) < 50:
-            errors.append("Description too short (should be at least 50 characters)")
-        if "use when" not in desc.lower() and "trigger" not in desc.lower():
-            errors.append("Description should include trigger phrases (e.g., 'Use when...')")
+        if not isinstance(desc, str):
+            errors.append("Frontmatter field 'description' must be a string")
+        else:
+            if len(desc) < 50:
+                errors.append("Description too short (should be at least 50 characters)")
+            if "use when" not in desc.lower() and "trigger" not in desc.lower():
+                errors.append("Description should include trigger phrases (e.g., 'Use when...')")
 
     # Check SKILL.md size
     lines = content.split("\n")
