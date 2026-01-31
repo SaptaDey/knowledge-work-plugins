@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 # Package all skills into .skill files
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
